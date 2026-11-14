@@ -11,8 +11,6 @@ services:
       MYSQL_PASSWORD: buspassword
     volumes:
       - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
     networks:
       - bus-network
     healthcheck:
@@ -20,33 +18,28 @@ services:
       interval: 10s
       timeout: 5s
       retries: 10
+      start_period: 30s
 
   backend:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: bus-backend
     restart: always
     ports:
       - "5000:5000"
+    env_file:
+      - admin.env
     environment:
       DB_HOST: db
       DB_USER: busadmin
       DB_PASSWORD: buspassword
       DB_NAME: busbooking
-      DB_PORT: 3306
+      DB_PORT: "3306"
+      SECRET_KEY: "replace-with-a-long-random-secret"
     depends_on:
       db:
         condition: service_healthy
-    networks:
-      - bus-network
-
-  frontend:
-    build: ./frontend
-    container_name: bus-frontend
-    restart: always
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
     networks:
       - bus-network
 
