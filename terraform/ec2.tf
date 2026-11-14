@@ -23,11 +23,14 @@ resource "aws_instance" "app" {
   associate_public_ip_address = true
 
   user_data = templatefile("${path.module}/user_data.sh", {
-    github_repo  = var.github_repo
-    db_host      = aws_db_instance.mysql.address
-    db_user      = var.db_user
-    db_password  = var.db_password
-    db_name      = var.db_name
+    github_repo    = var.github_repo
+    db_host        = aws_db_instance.mysql.address
+    db_user        = var.db_user
+    db_password    = var.db_password
+    db_name        = var.db_name
+    admin_username = var.admin_username
+    admin_password = var.admin_password
+    app_secret_key = var.app_secret_key
   })
 
   user_data_replace_on_change = true

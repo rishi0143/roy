@@ -1,21 +1,26 @@
 
 variable "aws_region" {
+  type    = string
   default = "ap-south-1"
 }
 
 variable "project_name" {
+  type    = string
   default = "gobus"
 }
 
 variable "instance_type" {
+  type    = string
   default = "t3.micro"
 }
 
 variable "db_name" {
+  type    = string
   default = "busbooking"
 }
 
 variable "db_user" {
+  type    = string
   default = "busadmin"
 }
 
@@ -38,17 +43,20 @@ variable "github_repo" {
   description = "Git repository containing the application"
   type        = string
 }
+
 variable "admin_username" {
-  type      = string
-  sensitive = true
+  description = "GoBus owner login username"
+  type        = string
 }
 
 variable "admin_password" {
-  type      = string
-  sensitive = true
+  description = "GoBus owner login password"
+  type        = string
+  sensitive   = true
 }
 
 variable "app_secret_key" {
-  type      = string
-  sensitive = true
+  description = "Flask application secret key"
+  type        = string
+  sensitive   = true
 }
