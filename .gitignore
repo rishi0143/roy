@@ -1,7 +1,15 @@
-# Terraform
-**/.terraform/*
-*.tfstate
-*.tfstate.*
-*.tfvars
-*.tfvars.json
-crash.log
+cat > .gitignore <<'EOF'
+# Secrets
+.env
+.env.*
+admin.env
+terraform.tfvars
+*.pem
+EOFcat > .gitignore <<'EOF'
+# Secrets
+.env
+.env.*
+admin.env
+terraform.tfvars
+*.pem
+EOF
