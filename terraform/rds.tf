@@ -1,4 +1,8 @@
 
+# ==================================
+# RDS SUBNET GROUP
+# ==================================
+
 resource "aws_db_subnet_group" "main" {
   name = "${var.project_name}-db-subnets"
 
@@ -11,6 +15,11 @@ resource "aws_db_subnet_group" "main" {
     Name = "${var.project_name}-db-subnets"
   }
 }
+
+
+# ==================================
+# MYSQL RDS DATABASE
+# ==================================
 
 resource "aws_db_instance" "mysql" {
   identifier = "${var.project_name}-mysql"
@@ -27,17 +36,20 @@ resource "aws_db_instance" "mysql" {
   username = var.db_user
   password = var.db_password
 
-  port                   = 3306
+  port = 3306
+
   db_subnet_group_name   = aws_db_subnet_group.main.name
-  vpc_security_group_ids = [aws_security_group.rds.id]
+  vpc_security_group_ids = [aws_security_group.db_sg.id]
 
   publicly_accessible = false
   multi_az            = false
 
   storage_encrypted       = true
   backup_retention_period = 1
-  deletion_protection     = true
-  skip_final_snapshot    = false
+
+  deletion_protection = false
+  skip_final_snapshot = false
+
   final_snapshot_identifier = "${var.project_name}-final-snapshot"
 
   tags = {
