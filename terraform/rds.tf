@@ -16,7 +16,6 @@ resource "aws_db_subnet_group" "main" {
   }
 }
 
-
 # ==================================
 # MYSQL RDS DATABASE
 # ==================================
@@ -48,9 +47,7 @@ resource "aws_db_instance" "mysql" {
   backup_retention_period = 1
 
   deletion_protection = false
-  skip_final_snapshot = false
-
-  final_snapshot_identifier = "${var.project_name}-final-snapshot"
+  skip_final_snapshot = true
 
   tags = {
     Name = "${var.project_name}-mysql"

@@ -1,0 +1,58 @@
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: bus-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: busbooking
+      MYSQL_USER: busadmin
+      MYSQL_PASSWORD: buspassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - bus-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: bus-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: db
+      DB_USER: busadmin
+      DB_PASSWORD: buspassword
+      DB_NAME: busbooking
+      DB_PORT: 3306
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - bus-network
+
+  frontend:
+    build: ./frontend
+    container_name: bus-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - bus-network
+
+volumes:
+  mysql_data:
+
+networks:
+  bus-network:
+    driver: bridge
