@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GoBus Owner Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>GoBus Owner Dashboard</h1>
+
+        <h3>Total Bookings: {{ bookings|length }}</h3>
+
+        <a href="{{ url_for('owner_logout') }}">Logout</a>
+
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Reference</th>
+                    <th>Passenger</th>
+                    <th>Phone</th>
+                    <th>Route</th>
+                    <th>Departure</th>
+                    <th>Seats</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for b in bookings %}
+                <tr>
+                    <td>{{ b.booking_reference }}</td>
+                    <td>{{ b.full_name }}</td>
+                    <td>{{ b.phone }}</td>
+                    <td>{{ b.source }} → {{ b.destination }}</td>
+                    <td>{{ b.departure_time }}</td>
+                    <td>{{ b.seats_booked }}</td>
+                    <td>₹{{ b.total_amount }}</td>
+                    <td>{{ b.booking_status }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8">No bookings available</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

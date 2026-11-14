@@ -56,3 +56,6 @@ docker run -d \
   -e DB_NAME="${db_name}" \
   -e DB_PORT=3306 \
   gobus:v1
+-e ADMIN_USERNAME="${admin_username}" \
+-e ADMIN_PASSWORD="${admin_password}" \
+-e SECRET_KEY="${app_secret_key}" \
