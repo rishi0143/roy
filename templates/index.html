@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GoBus - Bus Ticket Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">Go<span>Bus</span></div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#search">Book Tickets</a>
+        <a href="#mybooking">My Booking</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Travel Smart. Travel Easy.</h1>
+        <p>Book your bus tickets with GoBus.</p>
+        <a href="#search" class="hero-button">Book Your Journey</a>
+    </div>
+</section>
+
+<main class="container">
+
+    <section class="search-section" id="search">
+        <h2>Search Buses</h2>
+
+        <form id="searchForm" class="search-form">
+            <div class="form-group">
+                <label for="source">From</label>
+                <select id="source" required>
+                    <option value="">Select Source</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destination">To</label>
+                <select id="destination" required>
+                    <option value="">Select Destination</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="travelDate">Travel Date</label>
+                <input type="date" id="travelDate" required>
+            </div>
+
+            <button type="submit" class="primary-button">Search Buses</button>
+        </form>
+
+        <p id="message" class="message"></p>
+        <div id="busResults" class="bus-results"></div>
+    </section>
+
+    <section id="bookingSection" class="booking-section hidden">
+        <h2>Passenger Details</h2>
+
+        <form id="bookingForm">
+            <input type="hidden" id="tripId">
+
+            <div class="form-group">
+                <label for="passengerName">Full Name</label>
+                <input type="text" id="passengerName" maxlength="100" required>
+            </div>
+
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" min="1" max="120" required>
+            </div>
+
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" required>
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" pattern="[0-9]{10,15}"
+                       maxlength="15" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email (Optional)</label>
+                <input type="email" id="email" maxlength="150">
+            </div>
+
+            <div class="form-group">
+                <label for="seats">Number of Seats</label>
+                <input type="number" id="seats" min="1" max="6" value="1" required>
+            </div>
+
+            <button type="submit" class="primary-button">Confirm Booking</button>
+            <button type="button" id="cancelBooking" class="secondary-button">
+                Cancel
+            </button>
+        </form>
+
+        <p id="bookingMessage" class="message"></p>
+    </section>
+
+    <section id="mybooking" class="lookup-section">
+        <h2>My Booking</h2>
+        <p>Enter your booking reference to view your ticket.</p>
+
+        <form id="lookupForm" class="lookup-form">
+            <input type="text" id="bookingReference"
+                   placeholder="Example: BUS-ABC1234567" required>
+            <button type="submit" class="primary-button">Find Booking</button>
+        </form>
+
+        <div id="bookingDetails"></div>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 GoBus. All rights reserved.</p>
+</footer>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
